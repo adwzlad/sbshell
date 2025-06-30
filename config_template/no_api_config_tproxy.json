@@ -4,43 +4,29 @@
     "level": "info",
     "timestamp": true
   },
-  
-  "experimental": {
-  "cache_file": {
-    "enabled": true,
-    "path": "/etc/sing-box/cache.db",
-    "store_fakeip": false
-    }
-  },
-
- "dns": 
- {
-   "servers": 
-   [
+  "dns": {
+   "servers": [
      {"tag": "dns_direct", "address": "223.5.5.5", "address_strategy": "prefer_ipv4", "strategy": "prefer_ipv4", "detour": "🎯 全球直连"},
      {"tag": "dns_proxy", "address": "tls://8.8.8.8", "address_strategy": "prefer_ipv4", "strategy": "prefer_ipv4", "detour": "🎈 自动选择"}
-   ],
-   "rules": 
-   [
+    ],
+   "rules": [
      {"outbound": "any", "server": "dns_direct", "disable_cache": true},
      {"clash_mode": "Direct", "server": "dns_direct"},
      {"clash_mode": "Global", "server": "dns_proxy"},
      {"rule_set": "geosite-cn", "server": "dns_direct"},
      {"rule_set": "geosite-geolocation-!cn", "server": "dns_proxy"}
-   ],
+    ],
    "final": "dns_proxy",
    "strategy": "prefer_ipv4"
-},
-
-"inbounds": [
-  {
+  },
+  "inbounds": [
+   {
     "type": "tproxy",
     "tag": "tproxy-in",
     "listen": "0.0.0.0",
     "listen_port": 7895
-  }
-],
-
+   }
+  ],
   "outbounds": [
     { "tag": "🅾️ OpenAI", "type": "selector", "outbounds": ["🚀 节点选择", "🔯 Oracle自动", "🇺🇸 美国自动", "🇯🇵 日本自动", "🇹🇼 台湾自动", "🇸🇬 新加坡自动", "🇭🇰 香港自动", "🎈 自动选择"] },
     { "tag": "📹 YouTube", "type": "selector", "outbounds": ["🚀 节点选择", "🔯 Oracle自动", "🇺🇸 美国自动", "🇯🇵 日本自动", "🇹🇼 台湾自动", "🇸🇬 新加坡自动", "🇭🇰 香港自动", "🎈 自动选择"] },
@@ -70,14 +56,11 @@
     { "tag": "🎯 全球直连", "type": "direct" },
     { "tag": "🛑 全球拦截", "type": "block" }
   ],
-  
-  "route": 
- {
+  "route": {
    "auto_detect_interface": true,
    "final": "🐠 兜底策略",
    "default_mark": 666,
-   "rules": 
-   [
+   "rules": [
      {"action": "sniff"},
      {"protocol": "dns", "action": "hijack-dns"},
      {"clash_mode": "direct", "outbound": "🎯 全球直连"},
@@ -102,8 +85,7 @@
      {"rule_set": "geosite-proxy", "outbound": "‍🏴‍☠️ Proxy"},
      {"rule_set": "geosite-geolocation-!cn", "outbound": "🔯 Oracle自动"},
      {"rule_set": ["geoip-cn", "geosite-cn"], "outbound": "🎯 全球直连"}
-   ],
-    
+   ],  
    "rule_set": [
       { "tag": "geosite-ads", "type": "remote", "format": "binary", "url": "https://gaus.dpdns.org/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/category-ads-all.srs", "download_detour": "🎯 全球直连", "update_interval": "48h" },
       { "tag": "geosite-adblock", "type": "remote", "format": "binary", "url": "https://gaus.dpdns.org/https://raw.githubusercontent.com/REIJI007/AdBlock_Rule_For_Sing-box/main/adblock_reject.srs", "download_detour": "🎯 全球直连", "update_interval": "48h" },

@@ -92,7 +92,7 @@
     {"rule_set":"geosite-cloudflare","outbound":"🌐Cloudflare"},
     {"rule_set":"geosite-bilibili","outbound":"🎬️Bilibili"},
     {"rule_set":["geosite-wechat","geoip-wechat"],"outbound":"🤢WeChat"},
-    {"rule_set":"geosite-proxy","outbound":"‍🏴‍☠️Proxy"},
+    {"rule_set":"geosite-proxy","outbound":"🏴‍☠️Proxy"},
     {"rule_set":"geosite-geolocation-!cn","outbound":"🔯Oracle自动"},
     {"rule_set":["geoip-cn","geosite-cn"],"outbound":"🎯全球直连"}
    ],   

@@ -21,18 +21,23 @@
  },
   "dns":{
    "servers":[
-    {"tag":"dns_direct","address":"223.5.5.5","address_strategy":"prefer_ipv4","strategy":"prefer_ipv4","detour":"🎯全球直连"},
-    {"tag":"dns_proxy","address":"tls://8.8.8.8","address_strategy":"prefer_ipv4","strategy":"prefer_ipv4","detour":"🎈自动选择"}
+    {"tag":"dns_direct","address":"https://223.5.5.5/dns-query","address_resolver": "resolver_direct", "address_strategy":"prefer_ipv6","strategy":"prefer_ipv6","detour":"🎯全球直连"},
+    {"tag":"resolver_direct","address":"udp://223.5.5.5:53","address_strategy":"prefer_ipv6","strategy":"prefer_ipv6","detour":"🎯全球直连"},
+    {"tag":"dns_proxy","address":"tls://8.8.8.8:853","address_resolver": "resolver_proxy","address_strategy":"prefer_ipv6","strategy":"prefer_ipv6","detour":"🎈自动选择"},
+    {"tag":"resolver_proxy","address":"udp://8.8.8.8:53","address_strategy":"prefer_ipv6","strategy":"prefer_ipv6","detour":"🎈自动选择"}
    ],
    "rules":[
-    {"outbound":"any","server":"dns_direct","disable_cache":true},
-    {"clash_mode":"Direct","server":"dns_direct"},
-    {"clash_mode":"Global","server":"dns_proxy"},
-    {"rule_set":"geosite-cn","action":"route","server":"dns_direct"},
-    {"rule_set":"geosite-geolocation-!cn","server":"dns_proxy"}
+    {"action":"route","outbound":"any","server":"dns_direct","disable_cache":true},
+    {"action":"route","clash_mode":"Direct","server":"dns_direct"},
+    {"action":"route","clash_mode":"Global","server":"dns_proxy"},
+    {"action":"route","rule_set":"geosite-cn","server":"dns_direct"},
+    {"action":"route","rule_set":"geosite-geolocation-!cn","server":"dns_proxy"}
    ],
+   "strategy":"prefer_ipv6",
    "final":"dns_proxy",
-   "strategy":"prefer_ipv4"
+   "disable_cache": false,
+   "disable_expire": false,
+   "independent_cache": true
  },
   "inbounds":[
    {
@@ -67,7 +72,7 @@
    {"tag":"🍎Apple","type":"selector","outbounds":["🎯全球直连","🔯Oracle自动","🇺🇸美国自动","🇯🇵日本自动","🇹🇼台湾自动","🇸🇬新加坡自动","🇭🇰香港自动","🎈自动选择"]},
    {"tag":"🌐Cloudflare","type":"selector","outbounds":["🎯全球直连","🔯Oracle自动","🇺🇸美国自动","🇯🇵日本自动","🇹🇼台湾自动","🇸🇬新加坡自动","🇭🇰香港自动","🎈自动选择"]},
    {"tag":"🎬️Bilibili","type":"selector","outbounds":["🎯全球直连","🔯Oracle自动","🇺🇸美国自动","🇯🇵日本自动","🇹🇼台湾自动","🇸🇬新加坡自动","🇭🇰香港自动","🎈自动选择"]},
-   {"tag":"🤢WeChat","type":"selector","outbounds":["🚀节点选择","🔯Oracle自动","🇺🇸美国自动","🇯🇵日本自动","🇹🇼台湾自动","🇸🇬新加坡自动","🇭🇰香港自动","🎈自动选择"]},
+   {"tag":"🤢WeChat","type":"selector","outbounds":["🎯全球直连","🔯Oracle自动","🇺🇸美国自动","🇯🇵日本自动","🇹🇼台湾自动","🇸🇬新加坡自动","🇭🇰香港自动","🎈自动选择"]},
    {"tag":"🏴‍☠️Proxy","type":"selector","outbounds":["🚀节点选择","🔯Oracle自动","🇺🇸美国自动","🇯🇵日本自动","🇹🇼台湾自动","🇸🇬新加坡自动","🇭🇰香港自动","🎈自动选择"]},
    {"tag":"🐠兜底策略","type":"selector","outbounds":["🎯全球直连","🔯Oracle自动","🇺🇸美国自动","🇯🇵日本自动","🇹🇼台湾自动","🇸🇬新加坡自动","🇭🇰香港自动","🎈自动选择"]},
    {"tag":"🚀节点选择","type":"selector","outbounds":["{all}"]},
